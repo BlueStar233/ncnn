@@ -209,6 +209,7 @@ public:
         PIXEL_GRAY = 3,
         PIXEL_RGBA = 4,
         PIXEL_BGRA = 5,
+        PIXEL_RGB_565 = 7,
 
         PIXEL_RGB2BGR = PIXEL_RGB | (PIXEL_BGR << PIXEL_CONVERT_SHIFT),
         PIXEL_RGB2GRAY = PIXEL_RGB | (PIXEL_GRAY << PIXEL_CONVERT_SHIFT),
@@ -219,21 +220,30 @@ public:
         PIXEL_BGR2GRAY = PIXEL_BGR | (PIXEL_GRAY << PIXEL_CONVERT_SHIFT),
         PIXEL_BGR2RGBA = PIXEL_BGR | (PIXEL_RGBA << PIXEL_CONVERT_SHIFT),
         PIXEL_BGR2BGRA = PIXEL_BGR | (PIXEL_BGRA << PIXEL_CONVERT_SHIFT),
+        PIXEL_BGR2RGB_565 = PIXEL_BGR | (PIXEL_RGB_565 << PIXEL_CONVERT_SHIFT),
 
         PIXEL_GRAY2RGB = PIXEL_GRAY | (PIXEL_RGB << PIXEL_CONVERT_SHIFT),
         PIXEL_GRAY2BGR = PIXEL_GRAY | (PIXEL_BGR << PIXEL_CONVERT_SHIFT),
         PIXEL_GRAY2RGBA = PIXEL_GRAY | (PIXEL_RGBA << PIXEL_CONVERT_SHIFT),
         PIXEL_GRAY2BGRA = PIXEL_GRAY | (PIXEL_BGRA << PIXEL_CONVERT_SHIFT),
+        PIXEL_GRAY2RGB_565 = PIXEL_GRAY | (PIXEL_RGB_565 << PIXEL_CONVERT_SHIFT),
 
         PIXEL_RGBA2RGB = PIXEL_RGBA | (PIXEL_RGB << PIXEL_CONVERT_SHIFT),
         PIXEL_RGBA2BGR = PIXEL_RGBA | (PIXEL_BGR << PIXEL_CONVERT_SHIFT),
         PIXEL_RGBA2GRAY = PIXEL_RGBA | (PIXEL_GRAY << PIXEL_CONVERT_SHIFT),
         PIXEL_RGBA2BGRA = PIXEL_RGBA | (PIXEL_BGRA << PIXEL_CONVERT_SHIFT),
+        PIXEL_RGBA2RGB_565 = PIXEL_RGBA | (PIXEL_RGB_565 << PIXEL_CONVERT_SHIFT),
 
         PIXEL_BGRA2RGB = PIXEL_BGRA | (PIXEL_RGB << PIXEL_CONVERT_SHIFT),
         PIXEL_BGRA2BGR = PIXEL_BGRA | (PIXEL_BGR << PIXEL_CONVERT_SHIFT),
         PIXEL_BGRA2GRAY = PIXEL_BGRA | (PIXEL_GRAY << PIXEL_CONVERT_SHIFT),
         PIXEL_BGRA2RGBA = PIXEL_BGRA | (PIXEL_RGBA << PIXEL_CONVERT_SHIFT),
+        PIXEL_BGRA2RGB_565 = PIXEL_BGRA | (PIXEL_RGB_565 << PIXEL_CONVERT_SHIFT),
+
+        PIXEL_RGB2BGR_565 = PIXEL_RGB_565 | (PIXEL_BGR << PIXEL_CONVERT_SHIFT),
+        PIXEL_RGB2GRAY_565 = PIXEL_RGB_565 | (PIXEL_GRAY << PIXEL_CONVERT_SHIFT),
+        PIXEL_RGB2RGBA_565 = PIXEL_RGB_565 | (PIXEL_RGBA << PIXEL_CONVERT_SHIFT),
+        PIXEL_RGB2BGRA_565 = PIXEL_RGB_565 | (PIXEL_BGRA << PIXEL_CONVERT_SHIFT)
     };
     // convenient construct from pixel data
     static Mat from_pixels(const unsigned char* pixels, int type, int w, int h, Allocator* allocator = 0);
@@ -565,6 +575,10 @@ NCNN_EXPORT void yuv420sp2rgb(const unsigned char* yuv420sp, int w, int h, unsig
 NCNN_EXPORT void yuv420sp2rgb_nv12(const unsigned char* yuv420sp, int w, int h, unsigned char* rgb);
 // convert yuv420sp(nv21) to rgb with half resize, the faster approximate version
 NCNN_EXPORT void yuv420sp2rgb_half(const unsigned char* yuv420sp, int w, int h, unsigned char* rgb);
+// convert rgb565 to rgb
+NCNN_EXPORT void rgb565_to_rgb(const unsigned char* raw, int w, int h, int stride, int to_stride, unsigned char* to);
+// convert rgb to rgb565
+NCNN_EXPORT void rgb_to_rgb565(const unsigned char* raw, int w, int h, int stride, int to_stride, unsigned char* to);
 // image pixel bilinear resize
 NCNN_EXPORT void resize_bilinear_c1(const unsigned char* src, int srcw, int srch, unsigned char* dst, int w, int h);
 NCNN_EXPORT void resize_bilinear_c2(const unsigned char* src, int srcw, int srch, unsigned char* dst, int w, int h);
